@@ -27,7 +27,9 @@ const blog_create_get = (req, res) => {
 
 const blog_create_post = (req, res) => {
   const blog = new Blog(req.body);
-  blog.save()
+  // console.log(req.body);
+  // console.log(blog);
+  blog.save() 
     .then(result => {
       res.redirect('/blogs');
     })
@@ -41,6 +43,7 @@ const blog_delete = (req, res) => {
   Blog.findByIdAndDelete(id)
     .then(result => {
       res.json({ redirect: '/blogs' });
+      // res.redirect('/blogs');
     })
     .catch(err => {
       console.log(err);
@@ -58,14 +61,22 @@ const blog_edit_get = (req, res) => {
   });
 }
 //Ham xu ly put de cap nhat bai viet
-const blog_edit_put = (req, res) => {
-  const id = req.params.id;
-  Blog.findByIdAndUpdate(id, req.body, { new: true })
+const blog_update_put = (req, res) => {
+  const blogId = req.params.id;
+  const updatedData = {
+    title: req.body.title,
+    snippet : req.body.snippet,
+    body: req.body.body
+  };
+
+  console.log(updatedData);
+
+  Blog.findByIdAndUpdate(blogId, updatedData, { new: true })
     .then(result => {
-      res.redirect(`/blogs/${id}`);
+      res.redirect(`/blogs/${result._id}`);  // Sau khi cập nhật, chuyển hướng đến trang chi tiết blog
     })
     .catch(err => {
-      console.log(err);
+      res.status(500).render('404', { title: 'Error updating blog' });
     });
 };
 
@@ -76,5 +87,5 @@ module.exports = {
   blog_create_post, 
   blog_delete,
   blog_edit_get,
-  blog_edit_put
+  blog_update_put
 }

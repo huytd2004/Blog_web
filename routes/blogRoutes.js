@@ -13,6 +13,6 @@ router.delete('/:id', blogController.blog_delete);
 router.get('/edit/:id', blogController.blog_edit_get);
 
 //Router để xử lý cập nhật bảng
-router.put('/edit/:id', blogController.blog_edit_put); 
+router.put('/edit/:id', blogController.blog_update_put); 
 
 module.exports = router;

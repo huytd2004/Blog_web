@@ -66,19 +66,40 @@
     }
 
     /* details styles */
-    .details{
-      position: relative;
+    .details {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-    .delete{
-      position: absolute;
-      top: 0;
-      right: 0;
-      border-radius: 50%;
-      padding: 8px;
+    
+    .details .content {
+      margin-bottom: 1rem;
     }
-    .delete:hover{
+    
+    .details img {
+      width: 20px;
+      height: 20px;
       cursor: pointer;
-      box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+    }
+    
+    .details .delete {
+      display: inline-block;
+      margin-left: 1rem;
+    }
+    
+    button {
+      background-color: whitesmoke;
+      color: black;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #555;
     }
 
     /* create styles */
@@ -109,3 +130,33 @@
       font-size: 1.2em;
       cursor: pointer;
     }
+
+    /* edit styles */
+    form {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    textarea {
+      height: 150px;
+    }
+    
