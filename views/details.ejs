@@ -9,21 +9,17 @@
     <div class="content">
       <p><%= blog.body %></p>
     </div>
-    <!-- <a class="delete" data-doc="<%= blog._id %>">
+     <a class="delete" data-doc="<%= blog._id %>">
       <img src="/trashcan.svg" alt="delete icon">
-    </a>   -->
+    </a>   
       <!-- Nút để xóa blog -->
-  <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
-    <button type="submit"><img src="/trashcan.svg" alt="delete icon">
-    </button>
-  </form>
   </div>
   <a href="/blogs/edit/<%= blog.id %>">
     <button type="button">Update</button>
   </a>
 
   <%- include("./partials/footer.ejs") %>
-<!-- <script>
+<script>
   const trashcan = document.querySelector('.delete');
   trashcan.addEventListener('click', (e) => {
     const endpoint = `/blogs/${trashcan.dataset.doc}`; // biến endpoint chứa đường dẫn đến blog cần xóa
@@ -34,6 +30,6 @@
       .then(data => window.location.href = data.redirect) // Khi dữ liệu được chuyển đổi, chúng ta chuyển hướng người dùng đến trang chính
       .catch(err => console.log(err));
   })
-</script> -->
+</script>
 </body>
 </html>

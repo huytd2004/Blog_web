@@ -68,9 +68,6 @@ const blog_update_put = (req, res) => {
     snippet : req.body.snippet,
     body: req.body.body
   };
-
-  console.log(updatedData);
-
   Blog.findByIdAndUpdate(blogId, updatedData, { new: true })
     .then(result => {
       res.redirect(`/blogs/${result._id}`);  // Sau khi cập nhật, chuyển hướng đến trang chi tiết blog
