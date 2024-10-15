@@ -3,7 +3,7 @@ const Blog = require('../models/blog');
 const blog_index = (req, res) => {
   Blog.find().sort({ createdAt: -1 })
     .then(result => {
-      res.render('index', { blogs: result, title: 'All blogs' });
+      res.render('index', { blogs: result, title: 'All blogs', user: res.locals.user });
     })
     .catch(err => {
       console.log(err);

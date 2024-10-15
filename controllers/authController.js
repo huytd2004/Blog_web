@@ -4,9 +4,16 @@ const jwt = require('jsonwebtoken');
 const user = require('../models/user');
 const { path } = require('express/lib/application');
 
-let refreshTokens = []; // lưu trữ refresh token
 
 const authController = {
+    //Hien thi form login
+    getLogin: (req, res) => {
+        res.render('login', { title: 'Login' });
+    },
+    // Hien thi form register
+    getRegister: (req, res) => {
+        res.render('register', { title: 'Register' });
+    },
     // register
     registerUser: async (req, res) => {
         try{
@@ -20,7 +27,7 @@ const authController = {
             });
             //save to db
             const user = await newUser.save(); 
-            res.status(201).json(user);
+            res.redirect('/auth/login');
         } catch (err) {
             res.status(500).json({ message: err.message }); // res.json() trả về một object JSON
         }
@@ -44,23 +51,25 @@ const authController = {
         try {
             const user = await User.findOne({ username: req.body.username });
             if(!user) {
-                res.status(400).json({ message: 'User not found' });
+                return res.status(400).json({ message: 'User not found' });
             }
             const validPassword = await bcrypt.compare(req.body.password, user.password);
             if(!validPassword) {
-                res.status(400).json({ message: 'Password is not correct' });
+                return res.status(400).json({ message: 'Password is not correct' });
             }
             if(user && validPassword) {
                 const accessToken = authController.generateAccessToken(user); // tạo access token
                 const refreshToken = authController.generateRefreshToken(user); // tạo refresh token
+                res.cookie("accessToken", accessToken, { // set access token vào cookie
+                    httpOnly: true, // không cho client-side javascript truy cập cookie
+                    sameSide: "strict" // chỉ gửi cookie nếu request đến từ cùng một domain
+                });
                 res.cookie("refreshToken", refreshToken, { //arg1 là tên cookie, arg2 là giá trị cookie, arg3 là option
                     httpOnly: true, // không cho client-side javascript truy cập cookie
-                    secure: false,  // chỉ gửi cookie qua https
-                    path: '/', // chỉ gửi cookie cho các request có path là '/'
                     sameSide: "strict" // chỉ gửi cookie nếu request đến từ cùng một domain
                 }); // set refresh token vào cookie
-                const { password, ...others } = user._doc; // loại bỏ password trong object user
-                res.status(200).json({...others, accessToken}); // trả về thông tin user không có password và token
+                // luu user vao locals de su dung o cac middleware khac
+                res.render('midLogin', { user: user });
             }
         } catch(err) {
             res.status(500).json({ message: err.message });
@@ -96,10 +105,11 @@ const authController = {
     //logout
     logoutUser: async (req, res) => {
         //clear cookie when logout
-        refreshTokens = refreshTokens.filter(token => token !== req.cookies.refreshToken); // loại bỏ refresh token khỏi mảng refreshTokens
-        res.clearCookie("refreshToken"); // xóa cookie  có value là "refreshToken"
-        res.status(200).json({ message: 'Logged out' });
+        res.clearCookie('accessToken');
+        res.clearCookie('refreshToken');
+        res.redirect('/');
     },
+
 }
 
 module.exports = authController;

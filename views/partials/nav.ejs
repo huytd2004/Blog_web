@@ -7,5 +7,43 @@
       <li><a href="/">Blogs</a></li>
       <li><a href="/about">About</a></li>
       <li><a href="/blogs/create">New Blog</a></li>
+      <li id="user-info"></li>
     </ul>
-  </nav>
+</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userInfo = document.getElementById('user-info');
+    
+    if (user) {
+      userInfo.innerHTML = `
+        <li><a>Hi, ${user.username}</a></li>
+        <li><a id="logout-link" href="#">Logout</a></li>
+      `;
+
+      // Thêm sự kiện click cho nút Logout
+      document.getElementById('logout-link').addEventListener('click', function(event) {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+        //Sau khi nhấn logout, gửi request post tới /logout
+        fetch('/auth/logout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ user })
+        }).then(function() {
+          // Xóa object user khỏi local storage
+          localStorage.removeItem('user');
+          // Chuyển hướng về trang đăng nhập
+          window.location.href = '/auth/login';
+        });
+      });
+    } else {
+      userInfo.innerHTML = `
+        <li><a href="/auth/login">Login</a></li>
+        <li><a href="/auth/register">Register</a></li>
+      `;
+    }
+  });
+</script>

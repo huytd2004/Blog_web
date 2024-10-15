@@ -9,6 +9,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const middlewareController = require('./controllers/middlewareController');
 // express app
 const app = express();
 
@@ -37,6 +38,7 @@ app.use((req, res, next) => {
 });
 
 // routes
+app.use(middlewareController.verifyToken);
 app.get('/', (req, res) => {
   res.redirect('/blogs');
 });
@@ -45,6 +47,7 @@ app.get('/about', (req, res) => {
   res.render('about', { title: 'About' });
 });
 
+
 // blog routes
 app.use('/blogs', blogRoutes);
 
@@ -52,6 +55,7 @@ app.use('/blogs', blogRoutes);
 app.use('/auth', authRoutes);
 //user routes
 app.use('/user',userRoutes);
+
 
 // 404 page
 // app.use((req, res) => {

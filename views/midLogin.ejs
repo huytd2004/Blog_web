@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mid Login</title>
+</head>
+<body>
+    <!-- Truyền dữ liệu user từ server vào một thẻ script riêng biệt -->
+    <script id="user-data" type="application/json">
+        <%- JSON.stringify(user) %>
+    </script>
+
+    <script>
+        // Lấy dữ liệu user từ thẻ script
+        const userDataScript = document.getElementById('user-data');
+        const user = JSON.parse(userDataScript.textContent);
+        // In ra object user trong console
+        console.log(user);
+        // Lưu object user vào local storage
+        localStorage.setItem('user', JSON.stringify(user));
+        // Chuyển hướng về trang /
+        window.location.href = '/';
+    </script>
+</body>
+</html>
