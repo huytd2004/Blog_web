@@ -9,7 +9,7 @@ router.get('/register',authController.getRegister);
 router.get('/login',authController.getLogin);
 router.post('/login',authController.loginUser);
 //refresh token
-router.post('/refresh',authController.requestRefreshToken);
+// router.post('/refresh',authController.requestRefreshToken);
 //logout
 router.post('/logout',authController.logoutUser);
 // router.post('/logout',middlewareController.verifyToken,authController.logoutUser);

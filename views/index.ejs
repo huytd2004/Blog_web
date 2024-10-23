@@ -10,9 +10,7 @@
       <% blogs.forEach(blog => { %>
         <a href="/blogs/<%= blog.id %>" class="single">
           <h3 class="title"><%= blog.title %></h3>
-          <p class="snippet"><%= blog.snippet %></p>
-          <!-- Thêm userID -->
-          <p class="userID"><%= blog.userID %></p>
+          <p class="snippet"><%= blog.classify %></p>
         </a>
       <% }) %>
     <% } else { %>

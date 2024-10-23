@@ -3,7 +3,7 @@ const Blog = require('../models/blog');
 const blog_index = (req, res) => {
   Blog.find().sort({ createdAt: -1 })
     .then(result => {
-      res.render('index', { blogs: result, title: 'All blogs', user: res.locals.user });
+      res.render('index', { blogs: result, title: 'All blogs'});
     })
     .catch(err => {
       console.log(err);
@@ -26,7 +26,10 @@ const blog_create_get = (req, res) => {
 }
 
 const blog_create_post = (req, res) => {
-  const blog = new Blog(req.body);
+  const blog = new Blog({
+    ...req.body,
+    username: req.session.username // Include the username of the logged-in user
+  });
   // console.log(req.body);
   // console.log(blog);
   blog.save() 
@@ -40,10 +43,16 @@ const blog_create_post = (req, res) => {
 
 const blog_delete = (req, res) => {
   const id = req.params.id;
-  Blog.findByIdAndDelete(id)
+  Blog.findById(id)
+    .then(blog => {
+      if (blog.username === req.session.username || req.session.isAdmin) {
+        return Blog.findByIdAndDelete(id);
+      } else {
+        res.status(403).json({ message: 'You are not authorized to delete this blog' });
+      } 
+    })
     .then(result => {
       res.json({ redirect: '/blogs' });
-      // res.redirect('/blogs');
     })
     .catch(err => {
       console.log(err);
@@ -53,19 +62,23 @@ const blog_delete = (req, res) => {
 const blog_edit_get = (req, res) => {
   const id = req.params.id; 
   Blog.findById(id)
-  .then(result => {
-    res.render('edit', { blog: result, title: 'Edit Blog' });
-  })
-  .catch(err => {
-    res.status(404).render('404', { title: 'Blog not found'});
-  });
+    .then(result => {
+      if (result.username === req.session.username || req.session.isAdmin) {
+        res.render('edit', { blog: result, title: 'Edit Blog' });
+      } else {
+        res.status(403).render('404', { title: 'Unauthorized' });
+      }
+    })
+    .catch(err => {
+      res.status(404).render('404', { title: 'Blog not found' });
+    });
 }
 //Ham xu ly put de cap nhat bai viet
 const blog_update_put = (req, res) => {
   const blogId = req.params.id;
   const updatedData = {
     title: req.body.title,
-    snippet : req.body.snippet,
+    classify : req.body.classify,
     body: req.body.body
   };
   Blog.findByIdAndUpdate(blogId, updatedData, { new: true })
@@ -76,6 +89,20 @@ const blog_update_put = (req, res) => {
       res.status(500).render('404', { title: 'Error updating blog' });
     });
 };
+const blog_search = async (req, res) => {
+  try {
+    let searchTerm = req.body.searchTerm;
+    const blogs = await Blog.find({ title: { $regex: searchTerm, $options: 'i' }});
+    res.render("index", {
+      blogs, title: 'Search Results'
+    });
+
+  } catch (error) {
+    console.log(error);
+  }
+
+};
+
 
 module.exports = {
   blog_index, 
@@ -84,5 +111,6 @@ module.exports = {
   blog_create_post, 
   blog_delete,
   blog_edit_get,
-  blog_update_put
+  blog_update_put,
+  blog_search
 }

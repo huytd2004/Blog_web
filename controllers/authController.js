@@ -37,14 +37,7 @@ const authController = {
         return jwt.sign({ // tạo token với arg1 là payload (data), arg2 là secret key, arg3 là option
             id: user.id,
             admin: user.admin
-        }, process.env.JWT_ACCESS_KEY, { expiresIn: '60s' }); 
-    },
-    //generate new refresh token
-    generateRefreshToken: (user) => {
-        return jwt.sign({ 
-            id: user.id,
-            admin: user.admin
-        }, process.env.JWT_REFRESH_KEY, { expiresIn: '365d' });
+        }, process.env.JWT_ACCESS_KEY); 
     },
     //login
     loginUser: async (req, res) => {
@@ -59,55 +52,55 @@ const authController = {
             }
             if(user && validPassword) {
                 const accessToken = authController.generateAccessToken(user); // tạo access token
-                const refreshToken = authController.generateRefreshToken(user); // tạo refresh token
                 res.cookie("accessToken", accessToken, { // set access token vào cookie
                     httpOnly: true, // không cho client-side javascript truy cập cookie
                     sameSide: "strict" // chỉ gửi cookie nếu request đến từ cùng một domain
                 });
-                res.cookie("refreshToken", refreshToken, { //arg1 là tên cookie, arg2 là giá trị cookie, arg3 là option
-                    httpOnly: true, // không cho client-side javascript truy cập cookie
-                    sameSide: "strict" // chỉ gửi cookie nếu request đến từ cùng một domain
-                }); // set refresh token vào cookie
-                // luu user vao locals de su dung o cac middleware khac
-                res.render('midLogin', { user: user });
+                // luu user vao session
+                req.session.username = user.username;
+                req.session.isAdmin = user.admin;
+                res.redirect('/'); // redirect về trang chủ
             }
         } catch(err) {
             res.status(500).json({ message: err.message });
         }
     },
     //refresh token(bao gồm accessToken và refreshToken)
-    requestRefreshToken: async (req, res) => {
-        const refreshToken = req.cookies.refreshToken; // lấy refresh token từ cookie
-        if(!refreshToken) {
-            return res.status(401).json({ message: 'User not authenticated' });
-        }
-        if(!refreshTokens.includes(refreshToken)) { // kiểm tra refresh token có trong mảng refreshTokens không
-            return res.status(403).json({ message: 'Invalid token' });
-        }
-        jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => { // verify refresh token
-            if(err) {
-                return res.status(403).json({ message: 'Invalid token' });
-            }
-            refreshTokens = refreshTokens.filter(token => token !== refreshToken); // loại bỏ refresh token khỏi mảng refreshTokens
-            //create new access token, new refresh token
-            const newAccessToken = authController.generateAccessToken(user);
-            const newRefreshToken = authController.generateRefreshToken(user);
-            refreshTokens.push(newRefreshToken); // thêm refresh token mới vào mảng refresh
-            res.cookie("refreshToken", newRefreshToken, { // set new refresh token vào cookie
-                httpOnly: true,
-                secure: true,
-                path: '/',
-                sameSide: "strict"
-            });
-            res.status(200).json({accessToken: newAccessToken});
-        });
-    },
-    //logout
+    // requestRefreshToken: async (req, res) => {
+    //     const refreshToken = req.cookies.refreshToken; // lấy refresh token từ cookie
+    //     if(!refreshToken) {
+    //         return res.status(401).json({ message: 'User not authenticated' });
+    //     }
+    //     if(!refreshTokens.includes(refreshToken)) { // kiểm tra refresh token có trong mảng refreshTokens không
+    //         return res.status(403).json({ message: 'Invalid token' });
+    //     }
+    //     jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => { // verify refresh token
+    //         if(err) {
+    //             return res.status(403).json({ message: 'Invalid token' });
+    //         }
+    //         refreshTokens = refreshTokens.filter(token => token !== refreshToken); // loại bỏ refresh token khỏi mảng refreshTokens
+    //         //create new access token, new refresh token
+    //         const newAccessToken = authController.generateAccessToken(user);
+    //         res.cookie("refreshToken", newRefreshToken, { // set new refresh token vào cookie
+    //             httpOnly: true,
+    //             secure: true,
+    //             path: '/',
+    //             sameSide: "strict"
+    //         });
+    //         res.status(200).json({accessToken: newAccessToken});
+    //     });
+    // },
+    // Logout
     logoutUser: async (req, res) => {
-        //clear cookie when logout
+        // Clear cookies when logging out
         res.clearCookie('accessToken');
         res.clearCookie('refreshToken');
-        res.redirect('/');
+        req.session.destroy(err => {
+            if (err) {
+                return res.status(500).json({ message: 'Logout failed' });
+            }
+            res.redirect('/auth/login');
+        });
     },
 
 }

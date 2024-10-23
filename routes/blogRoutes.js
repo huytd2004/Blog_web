@@ -3,12 +3,13 @@ const blogController = require('../controllers/blogController');
 const middlewareController = require('../controllers/middlewareController');
 const router = express.Router();
 
-router.get('/create', blogController.blog_create_get);
+router.get('/create', middlewareController.isAuthenticated,blogController.blog_create_get);
 router.get('/', blogController.blog_index);
-router.post('/',blogController.blog_create_post);
+router.post('/',middlewareController.isAuthenticated,blogController.blog_create_post);
 router.get('/:id', blogController.blog_details);
 router.delete('/:id', blogController.blog_delete);
-
+//search
+router.post('/search', blogController.blog_search);
 //Router để hiển thị form cập nhật bảng
 router.get('/edit/:id', blogController.blog_edit_get);
 

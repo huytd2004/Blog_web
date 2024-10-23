@@ -1,162 +1,523 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap');
-    body{
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 0 20px;
-      font-family: 'Noto Serif', serif;
-      max-width: 1200px;
-    }
-    p, h1, h2, h3, a, ul{
-      margin: 0;
-      padding: 0;
-      text-decoration: none;
-      color: #222;
-    }
 
-    /* nav & footer styles */
-    nav{
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 60px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #ddd;
-      text-transform: uppercase;
-    }
-    nav ul{
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-    nav li{
-      list-style-type: none;
-      margin-left: 20px;
-    }
-    nav h1{
-      font-size: 3em;
-    }
-    nav p, nav a{
-      color: #777;
-      font-weight: 300;
-    }
-    footer{
-      color: #777;
-      text-align: center;
-      margin: 80px auto 20px;
-    }
-    h2{
-      margin-bottom: 40px;
-    }
-    h3{
-      text-transform: capitalize;
-      margin-bottom: 8px;
-    }
-    .content{
-      margin-left: 20px;
-    }
+/* Add styles for the footer */
+footer {
+  background-color: #333; /* Dark background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Center the text */
+  padding: 20px 0; /* Add padding to the top and bottom */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+  position: fixed; /* Fix the footer at the bottom of the page */
+  width: 100%; /* Make the footer span the full width of the page */
+  bottom: 0; /* Position the footer at the bottom */
+}
 
-    /* index styles */
-    .blogs a{
-      display: block;
-      margin: 40px 0;
-      padding-left: 30px;
-      border-left: 6px solid crimson;
-    }
-    .blogs a:hover h3{
-      color: crimson;
-    }
+footer a {
+  color: #fff; /* White text color for links */
+  text-decoration: none; /* Remove underline from links */
+}
 
-    /* details styles */
-    .details {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 1rem;
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    .details .content {
-      margin-bottom: 1rem;
-    }
-    
-    .details img {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-    }
-    
-    .details .delete {
-      display: inline-block;
-      margin-left: 1rem;
-    }
-    
-    button {
-      background-color: whitesmoke;
-      color: black;
-      border: none;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-    }
-    
-    button:hover {
-      background-color: #555;
-    }
+footer a:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
 
-    /* create styles */
-    .create-blog form{
-      max-width: 400px;
-      margin: 0 auto;
-    }
-    .create-blog input,
-    .create-blog textarea{
-      display: block;
-      width: 100%;
-      margin: 10px 0;
-      padding: 8px;
-    }
-    .create-blog label{
-      display: block;
-      margin-top: 24px;
-    }
-    textarea{
-      height: 120px;
-    }
-    .create-blog button{
-      margin-top: 20px;
-      background: crimson;
-      color: white;
-      padding: 6px;
-      border: 0;
-      font-size: 1.2em;
-      cursor: pointer;
-    }
+/* General styles for the navigation bar */
+nav {
+  background-color: #333; /* Dark background color */
+  color: #fff; /* White text color */
+  padding: 10px 20px; /* Padding for the nav */
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space out the items */
+  align-items: center; /* Center items vertically */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+}
 
-    /* edit styles */
-    form {
-      max-width: 600px;
-      margin: 2rem auto;
-      padding: 1rem;
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: bold;
-    }
-    
-    input[type="text"],
-    textarea {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    
-    textarea {
-      height: 150px;
-    }
-    
+nav .site-title {
+  display: flex;
+  flex-direction: column;
+}
+
+nav .site-title h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+nav .site-title p {
+  margin: 0;
+  font-size: 14px;
+  color: #ccc; /* Lighter color for the subtitle */
+}
+
+nav .searchBar {
+  flex-grow: 1; /* Allow the search bar to grow */
+  margin-left: 20px; /* Space between the title and search bar */
+}
+
+nav .searchBar form {
+  display: flex;
+}
+
+nav .searchBar input[type="search"] {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  border-radius: 4px;
+}
+
+nav ul {
+  list-style: none; /* Remove bullet points */
+  display: flex; /* Use flexbox for layout */
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  margin-left: 20px; /* Space between list items */
+}
+
+nav ul li a {
+  color: #fff; /* White text color */
+  text-decoration: none; /* Remove underline */
+}
+
+nav ul li a:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+
+#user-info {
+  display: flex;
+  align-items: center;
+}
+
+#user-info a {
+  margin-left: 5px; /* Space between username and logout link */
+}
+/* General styles for the 404 error page */
+.not-found {
+  text-align: center; /* Center the text */
+  margin-top: 50px; /* Add some space at the top */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+}
+
+.not-found h1 {
+  font-size: 72px; /* Large font size for the main message */
+  color: #333; /* Dark text color */
+}
+
+.not-found p {
+  font-size: 24px; /* Smaller font size for the sub-message */
+  color: #666; /* Lighter text color */
+}
+
+.not-found a {
+  display: inline-block; /* Make the link behave like a button */
+  margin-top: 20px; /* Add some space at the top */
+  padding: 10px 20px; /* Add padding */
+  background-color: #333; /* Dark background color */
+  color: #fff; /* White text color */
+  text-decoration: none; /* Remove underline */
+  border-radius: 4px; /* Rounded corners */
+}
+
+.not-found a:hover {
+  background-color: #555; /* Lighter background color on hover */
+}
+/* General styles for the About Us page */
+.about {
+  text-align: center; /* Center the text */
+  margin: 50px auto; /* Center the content and add space at the top and bottom */
+  max-width: 800px; /* Limit the width of the content */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+}
+
+.about h2 {
+  font-size: 36px; /* Large font size for the main heading */
+  color: #333; /* Dark text color */
+  margin-bottom: 20px; /* Space below the heading */
+}
+
+.about h3 {
+  font-size: 28px; /* Smaller font size for the sub-heading */
+  color: #555; /* Lighter text color */
+  margin-bottom: 20px; /* Space below the sub-heading */
+}
+
+.about p {
+  font-size: 18px; /* Font size for the paragraph */
+  color: #666; /* Lighter text color */
+  line-height: 1.6; /* Increase line height for readability */
+  text-align: justify; /* Justify the text */
+}
+/* General styles for the Create Blog page */
+.create-blog {
+  max-width: 800px; /* Limit the width of the content */
+  margin: 50px auto; /* Center the content and add space at the top and bottom */
+  padding: 20px; /* Add padding around the content */
+  background-color: #f9f9f9; /* Light background color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+}
+
+.create-blog form {
+  display: flex;
+  flex-direction: column; /* Stack form elements vertically */
+}
+
+.create-blog label {
+  margin-bottom: 10px; /* Space below labels */
+  font-weight: bold; /* Bold labels */
+  color: #333; /* Dark text color */
+}
+
+.create-blog input[type="text"],
+.create-blog textarea {
+  margin-bottom: 20px; /* Space below inputs and textarea */
+  padding: 10px; /* Add padding inside inputs and textarea */
+  border: 1px solid #ccc; /* Light border color */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size for inputs and textarea */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+}
+
+.create-blog button {
+  padding: 10px 20px; /* Add padding inside the button */
+  background-color: #333; /* Dark background color */
+  color: #fff; /* White text color */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size for the button */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.create-blog button:hover {
+  background-color: #555; /* Lighter background color on hover */
+}
+/* General styles for the Blog Details page */
+.details {
+  max-width: 800px; /* Limit the width of the content */
+  margin: 50px auto; /* Center the content and add space at the top and bottom */
+  padding: 20px; /* Add padding around the content */
+  background-color: #f9f9f9; /* Light background color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+}
+
+.details h2 {
+  font-size: 36px; /* Large font size for the main heading */
+  color: #333; /* Dark text color */
+  margin-bottom: 20px; /* Space below the heading */
+}
+
+.details p {
+  font-size: 18px; /* Font size for the paragraph */
+  color: #666; /* Lighter text color */
+  line-height: 1.6; /* Increase line height for readability */
+  text-align: justify; /* Justify the text */
+}
+
+.details .content {
+  margin-top: 20px; /* Space above the content */
+}
+
+.details .delete {
+  display: inline-block; /* Make the link behave like a button */
+  margin-top: 20px; /* Add space at the top */
+  padding: 10px 20px; /* Add padding */
+  background-color: #e74c3c; /* Red background color */
+  color: #fff; /* White text color */
+  text-decoration: none; /* Remove underline */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.details .delete img {
+  vertical-align: middle; /* Align the image vertically in the middle */
+}
+
+.details .delete:hover {
+  background-color: #c0392b; /* Darker red background color on hover */
+}
+
+.details button {
+  padding: 10px 20px; /* Add padding inside the button */
+  background-color: #333; /* Dark background color */
+  color: #fff; /* White text color */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size for the button */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin-left: 10px; /* Space between delete and update buttons */
+}
+
+.details button:hover {
+  background-color: #555; /* Lighter background color on hover */
+}
+/* General styles for the Blog Details page */
+.details {
+  max-width: 800px; /* Limit the width of the content */
+  margin: 50px auto; /* Center the content and add space at the top and bottom */
+  padding: 20px; /* Add padding around the content */
+  background-color: #f9f9f9; /* Light background color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+}
+
+.details h2 {
+  font-size: 36px; /* Large font size for the main heading */
+  color: #333; /* Dark text color */
+  margin-bottom: 20px; /* Space below the heading */
+}
+
+.details p {
+  font-size: 18px; /* Font size for the paragraph */
+  color: #666; /* Lighter text color */
+  line-height: 1.6; /* Increase line height for readability */
+  text-align: justify; /* Justify the text */
+}
+
+.details .content {
+  margin-top: 20px; /* Space above the content */
+}
+
+.details .delete {
+  display: inline-block; /* Make the link behave like a button */
+  margin-top: 20px; /* Add space at the top */
+  padding: 10px 20px; /* Add padding */
+  background-color: #e74c3c; /* Red background color */
+  color: #fff; /* White text color */
+  text-decoration: none; /* Remove underline */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.details .delete img {
+  vertical-align: middle; /* Align the image vertically in the middle */
+}
+
+.details .delete:hover {
+  background-color: #c0392b; /* Darker red background color on hover */
+}
+
+.details button {
+  padding: 10px 20px; /* Add padding inside the button */
+  background-color: #333; /* Dark background color */
+  color: #fff; /* White text color */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size for the button */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin-left: 10px; /* Space between delete and update buttons */
+}
+
+.details button:hover {
+  background-color: #555; /* Lighter background color on hover */
+}
+/* General styles for the Edit Blog page */
+.edit-blog {
+  max-width: 800px; /* Limit the width of the content */
+  margin: 50px auto; /* Center the content and add space at the top and bottom */
+  padding: 20px; /* Add padding around the content */
+  background-color: #f9f9f9; /* Light background color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+}
+
+.edit-blog h1 {
+  font-size: 36px; /* Large font size for the main heading */
+  color: #333; /* Dark text color */
+  margin-bottom: 20px; /* Space below the heading */
+  text-align: center; /* Center the heading */
+}
+
+.edit-blog form {
+  display: flex;
+  flex-direction: column; /* Stack form elements vertically */
+}
+
+.edit-blog label {
+  margin-bottom: 10px; /* Space below labels */
+  font-weight: bold; /* Bold labels */
+  color: #333; /* Dark text color */
+}
+
+.edit-blog input[type="text"],
+.edit-blog textarea {
+  margin-bottom: 20px; /* Space below inputs and textarea */
+  padding: 10px; /* Add padding inside inputs and textarea */
+  border: 1px solid #ccc; /* Light border color */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size for inputs and textarea */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+}
+
+.edit-blog button {
+  padding: 10px 20px; /* Add padding inside the button */
+  background-color: #333; /* Dark background color */
+  color: #fff; /* White text color */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size for the button */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.edit-blog button:hover {
+  background-color: #555; /* Lighter background color on hover */
+}
+/* General styles for the All Blogs page */
+.blogs {
+  max-width: 800px; /* Limit the width of the content */
+  margin: 50px auto; /* Center the content and add space at the top and bottom */
+  padding: 20px; /* Add padding around the content */
+  background-color: #f9f9f9; /* Light background color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+}
+
+.blogs h2 {
+  font-size: 36px; /* Large font size for the main heading */
+  color: #333; /* Dark text color */
+  margin-bottom: 20px; /* Space below the heading */
+  text-align: center; /* Center the heading */
+}
+
+.blogs .single {
+  display: block; /* Make the link behave like a block element */
+  margin-bottom: 20px; /* Space below each blog link */
+  padding: 20px; /* Add padding inside the blog link */
+  background-color: #fff; /* White background color */
+  border: 1px solid #ddd; /* Light border color */
+  border-radius: 4px; /* Rounded corners */
+  text-decoration: none; /* Remove underline */
+  color: #333; /* Dark text color */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.blogs .single:hover {
+  background-color: #f0f0f0; /* Light background color on hover */
+}
+
+.blogs .title {
+  font-size: 24px; /* Font size for the blog title */
+  margin-bottom: 10px; /* Space below the title */
+}
+
+.blogs .snippet {
+  font-size: 16px; /* Font size for the blog snippet */
+  color: #666; /* Lighter text color */
+}
+/* General styles for the Login page */
+.login-container {
+  max-width: 400px; /* Limit the width of the content */
+  margin: 50px auto; /* Center the content and add space at the top and bottom */
+  padding: 20px; /* Add padding around the content */
+  background-color: #f9f9f9; /* Light background color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+}
+
+.login-container h2 {
+  font-size: 28px; /* Font size for the heading */
+  color: #333; /* Dark text color */
+  margin-bottom: 20px; /* Space below the heading */
+  text-align: center; /* Center the heading */
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column; /* Stack form elements vertically */
+}
+
+.login-container .form-group {
+  margin-bottom: 20px; /* Space below each form group */
+}
+
+.login-container label {
+  margin-bottom: 5px; /* Space below labels */
+  font-weight: bold; /* Bold labels */
+  color: #333; /* Dark text color */
+}
+
+.login-container input[type="username"],
+.login-container input[type="password"] {
+  padding: 10px; /* Add padding inside inputs */
+  border: 1px solid #ccc; /* Light border color */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size for inputs */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+}
+
+.login-container button {
+  padding: 10px 20px; /* Add padding inside the button */
+  background-color: #333; /* Dark background color */
+  color: #fff; /* White text color */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size for the button */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.login-container button:hover {
+  background-color: #555; /* Lighter background color on hover */
+}
+/* General styles for the Register page */
+.register-container {
+  max-width: 400px; /* Limit the width of the content */
+  margin: 50px auto; /* Center the content and add space at the top and bottom */
+  padding: 20px; /* Add padding around the content */
+  background-color: #f9f9f9; /* Light background color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+}
+
+.register-container h2 {
+  font-size: 28px; /* Font size for the heading */
+  color: #333; /* Dark text color */
+  margin-bottom: 20px; /* Space below the heading */
+  text-align: center; /* Center the heading */
+}
+
+.register-container form {
+  display: flex;
+  flex-direction: column; /* Stack form elements vertically */
+}
+
+.register-container .form-group {
+  margin-bottom: 20px; /* Space below each form group */
+}
+
+.register-container label {
+  margin-bottom: 5px; /* Space below labels */
+  font-weight: bold; /* Bold labels */
+  color: #333; /* Dark text color */
+}
+
+.register-container input[type="text"],
+.register-container input[type="email"],
+.register-container input[type="password"] {
+  padding: 10px; /* Add padding inside inputs */
+  border: 1px solid #ccc; /* Light border color */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size for inputs */
+  font-family: 'Noto Serif', serif; /* Use the imported font */
+}
+
+.register-container button {
+  padding: 10px 20px; /* Add padding inside the button */
+  background-color: #333; /* Dark background color */
+  color: #fff; /* White text color */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size for the button */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.register-container button:hover {
+  background-color: #555; /* Lighter background color on hover */
+}

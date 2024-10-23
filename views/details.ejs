@@ -1,4 +1,4 @@
-<html lang="en"></html>
+<html lang="en">
 <%- include("./partials/head.ejs") %>
 
 <body>
@@ -6,30 +6,34 @@
 
   <div class="details content">
     <h2><%= blog.title %></h2>
+    <p>By <%= blog.username %></p> <!-- Add the author's username here -->
     <div class="content">
       <p><%= blog.body %></p>
     </div>
-     <a class="delete" data-doc="<%= blog._id %>">
-      <img src="/trashcan.svg" alt="delete icon">
-    </a>   
-      <!-- Nút để xóa blog -->
+    <% if (blog.username === username || isAdmin) { %>
+      <a class="delete" data-doc="<%= blog._id %>">
+        <img src="/trashcan.svg" alt="delete icon">
+      </a>
+      <a href="/blogs/edit/<%= blog.id %>">
+        <button type="button">Update</button>
+      </a>
+    <% } %>
   </div>
-  <a href="/blogs/edit/<%= blog.id %>">
-    <button type="button">Update</button>
-  </a>
 
   <%- include("./partials/footer.ejs") %>
 <script>
   const trashcan = document.querySelector('.delete');
-  trashcan.addEventListener('click', (e) => {
-    const endpoint = `/blogs/${trashcan.dataset.doc}`; // biến endpoint chứa đường dẫn đến blog cần xóa
-    fetch(endpoint, {
-      method: 'DELETE'
-    }) // gửi yêu cầu delete đến máy chủ
-      .then(respond => respond.json()) // Khi server trả về phản hồi, nó được chuyển đổi thành JSON
-      .then(data => window.location.href = data.redirect) // Khi dữ liệu được chuyển đổi, chúng ta chuyển hướng người dùng đến trang chính
-      .catch(err => console.log(err));
-  })
+  if (trashcan) {
+    trashcan.addEventListener('click', (e) => {
+      const endpoint = `/blogs/${trashcan.dataset.doc}`; // biến endpoint chứa đường dẫn đến blog cần xóa
+      fetch(endpoint, {
+        method: 'DELETE'
+      }) // gửi yêu cầu delete đến máy chủ
+        .then(respond => respond.json()) // Khi server trả về phản hồi, nó được chuyển đổi thành JSON
+        .then(data => window.location.href = data.redirect) // Khi dữ liệu được chuyển đổi, chúng ta chuyển hướng người dùng đến trang chính
+        .catch(err => console.log(err));
+    });
+  }
 </script>
 </body>
 </html>

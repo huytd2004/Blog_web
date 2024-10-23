@@ -1,49 +1,53 @@
 <nav>
-    <div class="site-title">
-      <a href="/"><h1>Blog</h1></a>
-      <p>All the things you want to write</p>
-    </div>
-    <ul>
-      <li><a href="/">Blogs</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/blogs/create">New Blog</a></li>
-      <li id="user-info"></li>
-    </ul>
+  <div class="site-title">
+    <a href="/"><h1>Blog</h1></a>
+    <p>All the things you want to write</p>
+  </div>
+  <div class="searchBar">
+    <form action="/blogs/search" method="POST" class="search__form" role="search">
+      <input 
+        type="search"
+        aria-label="Seach"
+        id="searchInput"
+        name="searchTerm"
+        placeholder="Seach the site..."
+      >
+    </form>
+  </div>
+  <ul>
+    <li><a href="/">Blogs</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/blogs/create">New Blog</a></li>
+    <li id="user-info">
+      <% if (username) { %>
+        Hi, <%= username %> &nbsp;
+        <a href="#" id="logout-link">   Logout</a>
+      <% } else { %>
+        <a href="/auth/login">Login</a> &nbsp;<a href="/auth/register">Register</a>
+      <% } %>
+    </li>
+  </ul>
 </nav>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const userInfo = document.getElementById('user-info');
-    
-    if (user) {
-      userInfo.innerHTML = `
-        <li><a>Hi, ${user.username}</a></li>
-        <li><a id="logout-link" href="#">Logout</a></li>
-      `;
-
-      // Thêm sự kiện click cho nút Logout
-      document.getElementById('logout-link').addEventListener('click', function(event) {
-        event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
-        //Sau khi nhấn logout, gửi request post tới /logout
+    const logoutLink = document.getElementById('logout-link');
+    if (logoutLink) {
+      logoutLink.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default link behavior
         fetch('/auth/logout', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ user })
-        }).then(function() {
-          // Xóa object user khỏi local storage
-          localStorage.removeItem('user');
-          // Chuyển hướng về trang đăng nhập
-          window.location.href = '/auth/login';
+          }
+        }).then(response => {
+          if (response.ok) {
+            window.location.href = '/auth/login'; // Redirect to login page after logout
+          }
+        }).catch(error => {
+          console.error('Error:', error);
         });
       });
-    } else {
-      userInfo.innerHTML = `
-        <li><a href="/auth/login">Login</a></li>
-        <li><a href="/auth/register">Register</a></li>
-      `;
     }
   });
 </script>

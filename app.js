@@ -10,6 +10,8 @@ const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const middlewareController = require('./controllers/middlewareController');
+const session = require('express-session'); // khoi tao session
+const MongoStore = require('connect-mongo'); //luu session vao mongodb
 // express app
 const app = express();
 
@@ -36,9 +38,26 @@ app.use((req, res, next) => {
   res.locals.path = req.path;
   next();
 });
+// session middleware
+app.use(session({
+  secret: process.env.SESSION_SECRET, // Add SESSION_SECRET to your .env file
+  resave: false,
+  saveUninitialized: false, 
+  store: MongoStore.create({ // luu session vao mongodb
+    mongoUrl: dbURI,
+    collectionName: 'sessions'
+  }),
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 // 1 day
+  }
+}));
 
-// routes
-app.use(middlewareController.verifyToken);
+// Middleware to make user info available in all templates
+app.use((req, res, next) => {
+  res.locals.username = req.session.username || null; // Truyền biến username vào tất cả các view 
+  res.locals.isAdmin = req.session.isAdmin || false; 
+  next();
+});
 app.get('/', (req, res) => {
   res.redirect('/blogs');
 });
@@ -58,8 +77,8 @@ app.use('/user',userRoutes);
 
 
 // 404 page
-// app.use((req, res) => {
-//   res.status(404).render('404', { title: '404' });
-// });
+app.use((req, res) => {
+  res.status(404).render('404', { title: '404' });
+});
 
 
