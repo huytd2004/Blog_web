@@ -33,11 +33,7 @@ app.use(express.json()); //Sau khi express.json() xử lý, dữ liệu JSON đ�
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); //xu ly du lieu tu form
 app.use(methodOverride('_method')); // Sử dụng method-override để hỗ trợ PUT và DELETE
-app.use(morgan('dev'));
-app.use((req, res, next) => {
-  res.locals.path = req.path;
-  next();
-});
+app.use(morgan('dev')); 
 // session middleware
 app.use(session({
   secret: process.env.SESSION_SECRET, // Add SESSION_SECRET to your .env file

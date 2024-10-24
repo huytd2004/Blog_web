@@ -10,30 +10,21 @@
     <div class="content">
       <p><%= blog.body %></p>
     </div>
-    <% if (blog.username === username || isAdmin) { %>
-      <a class="delete" data-doc="<%= blog._id %>">
-        <img src="/trashcan.svg" alt="delete icon">
-      </a>
+
+    <form id="delete-form" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+      <button type="submit">
+        <img src="/trashcan.svg" alt="Delete">
+      </button>
+    </form>
+      
       <a href="/blogs/edit/<%= blog.id %>">
         <button type="button">Update</button>
       </a>
-    <% } %>
   </div>
 
   <%- include("./partials/footer.ejs") %>
 <script>
-  const trashcan = document.querySelector('.delete');
-  if (trashcan) {
-    trashcan.addEventListener('click', (e) => {
-      const endpoint = `/blogs/${trashcan.dataset.doc}`; // biến endpoint chứa đường dẫn đến blog cần xóa
-      fetch(endpoint, {
-        method: 'DELETE'
-      }) // gửi yêu cầu delete đến máy chủ
-        .then(respond => respond.json()) // Khi server trả về phản hồi, nó được chuyển đổi thành JSON
-        .then(data => window.location.href = data.redirect) // Khi dữ liệu được chuyển đổi, chúng ta chuyển hướng người dùng đến trang chính
-        .catch(err => console.log(err));
-    });
-  }
+
 </script>
 </body>
 </html>

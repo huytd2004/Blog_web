@@ -193,7 +193,7 @@ nav ul li a:hover {
 .create-blog button:hover {
   background-color: #555; /* Lighter background color on hover */
 }
-/* General styles for the Blog Details page */
+/* Styles for the details page */
 .details {
   max-width: 800px; /* Limit the width of the content */
   margin: 50px auto; /* Center the content and add space at the top and bottom */
@@ -208,6 +208,7 @@ nav ul li a:hover {
   font-size: 36px; /* Large font size for the main heading */
   color: #333; /* Dark text color */
   margin-bottom: 20px; /* Space below the heading */
+  text-align: center; /* Center the heading */
 }
 
 .details p {
@@ -218,103 +219,43 @@ nav ul li a:hover {
 }
 
 .details .content {
-  margin-top: 20px; /* Space above the content */
+  margin-bottom: 20px; /* Space below the content */
 }
 
-.details .delete {
-  display: inline-block; /* Make the link behave like a button */
-  margin-top: 20px; /* Add space at the top */
-  padding: 10px 20px; /* Add padding */
-  background-color: #e74c3c; /* Red background color */
-  color: #fff; /* White text color */
-  text-decoration: none; /* Remove underline */
-  border-radius: 4px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
+#delete-form {
+  display: inline-block;
+  margin-right: 10px;
 }
 
-.details .delete img {
-  vertical-align: middle; /* Align the image vertically in the middle */
+#delete-form button {
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
-.details .delete:hover {
-  background-color: #c0392b; /* Darker red background color on hover */
+#delete-form button img {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
 }
 
-.details button {
-  padding: 10px 20px; /* Add padding inside the button */
-  background-color: #333; /* Dark background color */
-  color: #fff; /* White text color */
-  border: none; /* Remove border */
-  border-radius: 4px; /* Rounded corners */
-  font-size: 16px; /* Font size for the button */
-  cursor: pointer; /* Pointer cursor on hover */
-  margin-left: 10px; /* Space between delete and update buttons */
+#delete-form button:hover img {
+  opacity: 0.7;
 }
 
-.details button:hover {
-  background-color: #555; /* Lighter background color on hover */
-}
-/* General styles for the Blog Details page */
-.details {
-  max-width: 800px; /* Limit the width of the content */
-  margin: 50px auto; /* Center the content and add space at the top and bottom */
-  padding: 20px; /* Add padding around the content */
-  background-color: #f9f9f9; /* Light background color */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  font-family: 'Noto Serif', serif; /* Use the imported font */
+a button[type="button"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
-.details h2 {
-  font-size: 36px; /* Large font size for the main heading */
-  color: #333; /* Dark text color */
-  margin-bottom: 20px; /* Space below the heading */
+a button[type="button"]:hover {
+  background-color: #0056b3;
 }
 
-.details p {
-  font-size: 18px; /* Font size for the paragraph */
-  color: #666; /* Lighter text color */
-  line-height: 1.6; /* Increase line height for readability */
-  text-align: justify; /* Justify the text */
-}
-
-.details .content {
-  margin-top: 20px; /* Space above the content */
-}
-
-.details .delete {
-  display: inline-block; /* Make the link behave like a button */
-  margin-top: 20px; /* Add space at the top */
-  padding: 10px 20px; /* Add padding */
-  background-color: #e74c3c; /* Red background color */
-  color: #fff; /* White text color */
-  text-decoration: none; /* Remove underline */
-  border-radius: 4px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-}
-
-.details .delete img {
-  vertical-align: middle; /* Align the image vertically in the middle */
-}
-
-.details .delete:hover {
-  background-color: #c0392b; /* Darker red background color on hover */
-}
-
-.details button {
-  padding: 10px 20px; /* Add padding inside the button */
-  background-color: #333; /* Dark background color */
-  color: #fff; /* White text color */
-  border: none; /* Remove border */
-  border-radius: 4px; /* Rounded corners */
-  font-size: 16px; /* Font size for the button */
-  cursor: pointer; /* Pointer cursor on hover */
-  margin-left: 10px; /* Space between delete and update buttons */
-}
-
-.details button:hover {
-  background-color: #555; /* Lighter background color on hover */
-}
 /* General styles for the Edit Blog page */
 .edit-blog {
   max-width: 800px; /* Limit the width of the content */

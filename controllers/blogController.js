@@ -48,16 +48,19 @@ const blog_delete = (req, res) => {
       if (blog.username === req.session.username || req.session.isAdmin) {
         return Blog.findByIdAndDelete(id);
       } else {
-        res.status(403).json({ message: 'You are not authorized to delete this blog' });
-      } 
+        res.status(403).render('404', { title: 'Unauthorized' });
+        throw new Error('Unauthorized'); // Ensure the promise chain is broken
+      }
     })
     .then(result => {
-      res.json({ redirect: '/blogs' });
+      res.redirect('/blogs');
     })
     .catch(err => {
       console.log(err);
     });
 }
+
+
 //Ham xu ly get de hien thi form cap nhat bai viet
 const blog_edit_get = (req, res) => {
   const id = req.params.id; 
