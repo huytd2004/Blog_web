@@ -1,5 +1,5 @@
 # Blog_web
-
+Demo : https://blog-web-1kkd.onrender.com/blogs
 ## Description
 **Blog_web** is a simple web application built using Node.js and Express.js, connected to MongoDB for data management and rendering dynamic views with EJS.
 
@@ -22,6 +22,8 @@ Run the following command to start the application:
 nodemon app.js
 ```
 The server will run on port 3000. You can access the app at http://localhost:3000.
+
+
 
 
 
